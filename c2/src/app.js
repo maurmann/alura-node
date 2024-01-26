@@ -38,7 +38,7 @@ app.get("/books", async (req, res) => {
 
     res.status(200).json(books);
 });
-*/
+
 
 app.get("/books/:id", (req, res) => {
     const book = getBook(req.params.id);
@@ -61,5 +61,6 @@ app.delete("/books/:id", (req, res) => {
     books.splice(index, 1);
     res.status(200).send("deleted sucessfully");
 });
+*/
 
 export default app;
