@@ -1,7 +1,6 @@
-import express, { json } from "express";
+import express from "express";
 import connectDatabase from "./config/dbConnect.js";
-import book from './models/book.js';
-
+import routes from "./routes/index.js";
 
 const connection = await connectDatabase();
 connection.on("error", (error) => {
@@ -13,22 +12,10 @@ connection.once("open", () => {
 });
 
 const app = express();
-
-// para que reconheca o formato da requisição
-app.use(express.json());
-
-const books = [
-    {
-        id: 1,
-        title: "1984"
-    },
-    {
-        id: 2,
-        title: "A Revolução dos Bichos"
-    }
-]
+routes(app);
 
 
+/*
 function getBook(id) {
     const index = getBookIndex(id);
 
@@ -41,10 +28,7 @@ function getBook(id) {
 function getBookIndex(id) {
     return books.findIndex(book => { return book.id === Number(id) });
 }
-
-app.get("/", (req, res) => {
-    res.status(200).send("Curso");
-});
+*/
 
 /*
 app.get("/books", async (req, res) => {
@@ -64,10 +48,7 @@ app.get("/books/:id", (req, res) => {
         res.status(404).send("Book not found");
 });
 
-app.post("/books", (req, res) => {
-    books.push(req.body);
-    res.status(201).send("Book created");
-});
+
 
 app.put("/books/:id", (req, res) => {
     const index = getBookIndex(req.params.id);
