@@ -13,6 +13,30 @@ class BookController {
         }
     }
 
+    static async searchBooks(req, res) {
+        try {
+
+            // the regular expression is used to perform a partial string search
+
+            let searchExpression = {};
+
+            if (req.query.title) {
+                const titleExpression = new RegExp(req.query.title, 'i');
+                searchExpression = { ...searchExpression, title: titleExpression };
+            }
+
+            if (req.query.editor) {
+                const editorExpression = new RegExp(req.query.editor, 'i');
+                searchExpression = { ...searchExpression, editor: editorExpression };
+            }
+
+            const books = await book.find(searchExpression);
+            res.status(200).json(books);
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
+    }
+
     static async getBookById(req, res) {
         try {
             const foundBook = await book.findById(req.params.id);
